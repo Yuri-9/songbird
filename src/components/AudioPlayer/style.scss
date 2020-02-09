@@ -1,0 +1,31 @@
+
+.rhap_forward-button,
+.rhap_rewind-button,
+.rhap_repeat-button,
+.rhap_volume-controls,
+.rhap_additional-controls{
+    display: none !important;    
+}
+
+.rhap_play-pause-button svg path{
+    fill: #222;
+}
+.rhap_progress-container{
+    outline: none !important;
+}
+.rhap_button-clear.rhap_play-pause-button{
+    background-color: #00bc8c;
+    border-radius: 50px;    
+    outline: none !important;
+}
+.rhap_container{  
+    border-top: 1px solid #7a7a7a; 
+    background-color: #303030 !important;
+    min-width: 200px !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+.rhap_time{
+color: #d3d3d3 !important;
+font-size: 0.8em !important;
+}
