@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import './style.scss';
 import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
-import bird from '../../data/birds';
+import bird from '../../data/dateBirds';
 
 console.log(bird);
 

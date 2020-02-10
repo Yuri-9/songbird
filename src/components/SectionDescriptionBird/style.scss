@@ -1,19 +1,24 @@
 
-.section_secret{
-    display: flex;
+.description_bird{
     background-color: #303030;
     padding: 15px;
     border-radius: 10px;
 }
 
+.description_bird--flex{
+    display: flex;
+}
 .container_player {
     width: 100%;
     padding-left: 20px;
     flex-shrink: 10;
 }
+.description_bird--text{
+    display: block;
+}
 
-@media screen and (max-width: 580px) {
-    .section_secret {
+@media screen and (max-width: 480px) {
+    .description_bird--flex {
         flex-wrap: wrap;
         justify-content: center;
     }
