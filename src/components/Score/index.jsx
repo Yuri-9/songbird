@@ -3,13 +3,14 @@
 import React from 'react';
 import './style.scss';
 
-function ImageBird({ birdDate }) {
+function Score({ score }) {
   return (
-    <div className="container_image">
-      <img src={birdDate.image} alt="bird" />
-    </div>
+    <h5 className="header_score">
+      Score:
+      {' '}
+      {score}
+    </h5>
   );
 }
 
-
-export default ImageBird;
+export default Score;
