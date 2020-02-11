@@ -42,7 +42,6 @@ class App extends Component {
     console.log('level', level);
   }
 
-
   render() {
     return (
       <div className="wrapper">
