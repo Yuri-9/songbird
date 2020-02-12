@@ -5,8 +5,7 @@ import './style.scss';
 import ButtonBird from '../ButtonBird/index';
 import birdsDate from '../../data/dateBirds';
 
-class SectionListBirds extends Component {  
-    
+class SectionListBirds extends Component {
 
   render() {
     const { state, update } = this.props;

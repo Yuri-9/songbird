@@ -5,14 +5,25 @@ import './style.scss';
 
 function ButtonNext(props) {
   const { state, update } = props;
-  const { level, isCorrectAnswer } = state;
+  const { level, isCorrectAnswerGet, clickButtonNextLevel } = state;
   let levelNext = level;
-  if (isCorrectAnswer) {
+  if (isCorrectAnswerGet) {
     levelNext = (level + 1) % 6;
   }
+  const updateState = () => {
+    if (isCorrectAnswerGet && !clickButtonNextLevel) {
+      update({ level: levelNext, clickButtonNextLevel: true });
+    } else {
+      update({
+        isCorrectAnswer: false,
+        isCorrectAnswerGet: false,
+        clickButtonNextLevel: false,
+      });
+    }
+  };
 
   return (
-    <button type="button" className="button_next" onClick={() => update({ level: levelNext })}>Next Level</button>
+    <button type="button" className={isCorrectAnswerGet ? 'button_next green' : 'button_next'} onClick={updateState}>Next Level</button>
   );
 }
 

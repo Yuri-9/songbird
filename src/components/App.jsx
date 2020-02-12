@@ -17,23 +17,30 @@ console.log(birdsDate);
 class App extends Component {
   constructor(props) {
     super(props);
-    // Устанавливаем состояние
     this.state = {
       level: 0,
       numberSecretBird: getRandomNumber(6),
       numberSelectBird: 0,
-      isCorrectAnswer: true,
+      isCorrectAnswer: false,
+      isCorrectAnswerGet: false,
+      clickButtonNextLevel: false,      
       data: null,
       active: 0,
       term: '',
-    };
-    this.updateData = this.updateData.bind(this);
+    };   
   }
 
-  updateData(config) {
+
+  updateData = (config) => {
     this.setState(config);
     const { level } = this.state;
     console.log('level', level);
+  }
+
+  updateCorrectAnswerGet = (isCorrectAnswer) => {
+    if (isCorrectAnswer) {
+      this.setState({ isCorrectAnswerGet: true });
+    }
   }
 
   consoleLog() {
@@ -42,7 +49,12 @@ class App extends Component {
     console.log('level', level);
   }
 
+
   render() {
+    console.log('isCorrectAnswer', this.state.isCorrectAnswer);
+    console.log('isCorrectAnswerGet', this.state.isCorrectAnswerGet);
+    console.log('clickButtonNextLevel', this.state.clickButtonNextLevel);
+
     return (
       <div className="wrapper">
         <header className="header">

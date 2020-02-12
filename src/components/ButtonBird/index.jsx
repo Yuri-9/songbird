@@ -6,29 +6,46 @@ import './style.scss';
 class ButtonBird extends Component {
   constructor(props) {
     super(props);
-    // Устанавливаем состояние
     this.state = {
       classNameDiv: 'button_bird--color',
+    };
+  }
+  onClick = () => {
+    const {
+      birdDate, state, update
+    } = this.props;
+    const { classNameDiv } = this.state;
+    const { numberSecretBird, isCorrectAnswerGet, isCorrectAnswer } = state;
+    const isGetAnswer = (birdDate.id - 1) === numberSecretBird;
+
+    update({
+      numberSelectBird: (birdDate.id - 1),
+      isCorrectAnswer: isGetAnswer,
+    });
+
+    if (isGetAnswer) {
+      update({
+        isCorrectAnswerGet: true,
+      });
+    }
+
+    if (!isCorrectAnswerGet) {
+      this.setState({
+        classNameDiv: (numberSecretBird === birdDate.id - 1) ? `${classNameDiv} color_green` : `${classNameDiv} color_red`,
+      });
     }
   }
 
-  render() {
-   
-    const { birdDate, state, isCorrectAnswer, update } = this.props;
-    console.log('birdDate', birdDate, 'isCorrectAnswer', isCorrectAnswer, 'update', state);
-    
-    const { classNameDiv } = this.state;
+  colorButton = () => {
+      
+  }
 
-    const onClick = () => {
-      update({ numberSelectBird: (birdDate.id - 1) });
-      this.setState({
-        classNameDiv: isCorrectAnswer ? `${classNameDiv} color_red` : `${classNameDiv} color_green`,
-      });
-    };
-    console.log(classNameDiv);
+
+  render() {  
+    const { birdDate, state: {clickButtonNextLevel} } = this.props;
     return (
-      <li className="button_bird--item" onClick={onClick}>
-        <div className={classNameDiv} />
+      <li className="button_bird--item" onClick={this.onClick}>
+        <div className={ clickButtonNextLevel ? 'button_bird--color' : this.state.classNameDiv} />
         {birdDate.name}
       </li>
     );
@@ -36,9 +53,3 @@ class ButtonBird extends Component {
 }
 
 export default ButtonBird;
-
-
-// <li className="button_bird--item" onClick={onClick}>
-//         <div className={className} />
-//         {birdDate.name}
-//       </li>
