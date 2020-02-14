@@ -7,11 +7,12 @@ import birdsDate from '../../data/dateBirds';
 
 class SectionListBirds extends Component {
 
+
   render() {
-    const { state, update } = this.props;
+    const { state, update, className } = this.props;
     const { level } = state;
     const birdsDateLevel = birdsDate[level];
-    const buttonBirdList = birdsDateLevel.map((item) => <ButtonBird key={item.id} state={state} birdDate={item} update={update} />);
+    const buttonBirdList = birdsDateLevel.map((item) => <ButtonBird key={item.id} className={className} state={state} birdDate={item} update={update} />);
     return (
       <ul className="list_bird">
         {buttonBirdList}

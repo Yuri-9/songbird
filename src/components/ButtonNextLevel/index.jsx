@@ -1,31 +1,42 @@
 /* eslint-disable react/prefer-stateless-function */
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { Component } from 'react';
 import './style.scss';
 
-function ButtonNext(props) {
-  const { state, update } = props;
-  const { level, isCorrectAnswerGet, clickButtonNextLevel } = state;
-  let levelNext = level;
-  if (isCorrectAnswerGet) {
-    levelNext = (level + 1) % 6;
+class ButtonNext extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      className: 'button_next',
+    };
+    this.handleClick = this.handleClick.bind(this);
   }
-  const updateState = () => {
-    if (isCorrectAnswerGet && !clickButtonNextLevel) {
-      update({ level: levelNext, clickButtonNextLevel: true });
-    } else {
+
+  handleClick() {
+    const { state, update } = this.props;
+    const { level, isCorrectAnswerGet } = state;
+    const nextLevel = level + 1;
+    if (isCorrectAnswerGet) {
       update({
+        level: nextLevel,
         isCorrectAnswer: false,
         isCorrectAnswerGet: false,
-        clickButtonNextLevel: false,
+        clickButtonNextLevel: true,
+        scope: 6,
+        className: 'button_bird--color',
       });
+      this.setState({ className: 'button_next' });
     }
-  };
+  }
 
-  return (
-    <button type="button" className={isCorrectAnswerGet ? 'button_next green' : 'button_next'} onClick={updateState}>Next Level</button>
-  );
+  render() {
+    const { state } = this.props;
+    const { isCorrectAnswerGet } = state;
+    const { className } = this.state;
+    return (
+      <button type="button" onClick={() => this.handleClick()} className={isCorrectAnswerGet ? 'button_next green' : className}>Next Level</button>
+    );
+  }
 }
-
 
 export default ButtonNext;

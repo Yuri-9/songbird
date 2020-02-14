@@ -9,7 +9,7 @@ import birdsDate from '../../data/dateBirds';
 
 function SectionSecretBird(props) {
   const { state: { level, numberSecretBird } } = props;
-  console.log(level, numberSecretBird);
+  // console.log(level, numberSecretBird);
   const selectBirdDate = birdsDate[level][numberSecretBird];
   return (
     <div className="section_secret">

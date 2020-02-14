@@ -27,6 +27,9 @@ class App extends Component {
       data: null,
       active: 0,
       term: '',
+      scope: 5,
+      currentScope: 0,
+      className: 'button_bird--color',
     };   
   }
 
@@ -50,26 +53,24 @@ class App extends Component {
   }
 
 
-  render() {
-    console.log('isCorrectAnswer', this.state.isCorrectAnswer);
-    console.log('isCorrectAnswerGet', this.state.isCorrectAnswerGet);
-    console.log('clickButtonNextLevel', this.state.clickButtonNextLevel);
-
+  render() {    
+    const { isCorrectAnswerGet, currentScope, scope } = this.state;
     return (
       <div className="wrapper">
         <header className="header">
           <div className="logo" />
           <h1>Song Bird</h1>
-          <Score score={15} />
+          <Score score={currentScope} />
         </header>
         <KindBirdList state={this.state} />
         <main className="main">
           <SectionSecretBird state={this.state} />
           <SectionListBirds state={this.state} update={this.updateData} />
           <SectionDescriptionBird state={this.state} />
-          <ButtonNext state={this.state} update={this.updateData} />
+          <ButtonNext state={this.state} update={this.updateData}/>
         </main>
         <button type="button" onClick={() => this.consoleLog()} label="dsf" wight="100px" height="100px" />
+        <p>{scope}</p>
       </div>
     );
   }
