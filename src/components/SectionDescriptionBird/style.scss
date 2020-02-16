@@ -3,6 +3,9 @@
     background-color: #303030;
     padding: 15px;
     border-radius: 10px;
+    span {
+        display: block;
+    }
 }
 
 .description_bird--flex{
@@ -11,8 +14,14 @@
 }
 .container_player {
     width: 100%;
+    margin: 0;
     padding-left: 20px;
     flex-shrink: 10;
+    list-style: none;
+    li{
+        border-bottom: 1px solid #444;
+        margin-bottom: 20px;
+    }
 }
 .description_bird--text{
     display: block;

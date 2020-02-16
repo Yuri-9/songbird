@@ -1,25 +1,28 @@
 /* eslint-disable react/prefer-stateless-function */
 /* eslint-disable react/prop-types */
-import React, { Component } from 'react';
+import React from 'react';
 import './style.scss';
 import ButtonBird from '../ButtonBird/index';
 import birdsDate from '../../data/dateBirds';
 
-class SectionListBirds extends Component {
+function SectionListBirds({ handleClick, level, isCorrectAnswerGet }) {
+  const birdsDateLevel = birdsDate[level];
 
+  const buttonBirdList = birdsDateLevel.map((item) => (
+    <ButtonBird
+      key={item.id}
+      handleClick={handleClick}
+      isCorrectAnswerGet={isCorrectAnswerGet}
+      birdName={item.name}
+      id={item.id}
+    />
+  ));
 
-  render() {
-    const { state, update, className } = this.props;
-    const { level } = state;
-    const birdsDateLevel = birdsDate[level];
-    const buttonBirdList = birdsDateLevel.map((item) => <ButtonBird key={item.id} className={className} state={state} birdDate={item} update={update} />);
-    return (
-      <ul className="list_bird">
-        {buttonBirdList}
-      </ul>
-    );
-  }
+  return (
+    <ul className="list_bird">
+      {buttonBirdList}
+    </ul>
+  );
 }
-
 
 export default SectionListBirds;

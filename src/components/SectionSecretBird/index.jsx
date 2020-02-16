@@ -5,18 +5,19 @@ import './style.scss';
 import Player from '../AudioPlayer/index';
 import ImageBird from '../ImageBird/index';
 import birdsDate from '../../data/dateBirds';
+import image from '../../data/bird.jpg';
 
 
 function SectionSecretBird(props) {
-  const { state: { level, numberSecretBird } } = props;
-  // console.log(level, numberSecretBird);
-  const selectBirdDate = birdsDate[level][numberSecretBird];
+  const { level, numberSecretBird, isCorrectAnswerGet } = props;
+  const dateBirdSelect = birdsDate[level][numberSecretBird];
+
   return (
     <div className="section_secret">
-      <ImageBird birdDate={selectBirdDate} />
+      <ImageBird imageBird={isCorrectAnswerGet ? dateBirdSelect.image : image} />
       <div className="container_player">
-        <h3>******</h3>
-        <Player birdDate={selectBirdDate} />
+        <h3>{isCorrectAnswerGet ? dateBirdSelect.name : '******'}</h3>
+        <Player birdDate={dateBirdSelect} />
       </div>
     </div>
   );

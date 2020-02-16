@@ -3,11 +3,9 @@
 import React from 'react';
 import './style.scss';
 
-function ImageBird({ birdDate }) {
+function ImageBird({ imageBird }) {
   return (
-    <div className="container_image">
-      <img src={birdDate.image} alt="bird" />
-    </div>
+    <div style={{ backgroundImage: `url(${imageBird})` }} className="container_image" />
   );
 }
 

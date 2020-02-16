@@ -1,76 +1,127 @@
 import React, { Component } from 'react';
 import './app.scss';
+import audioFortune from '../data/music/fortune.mp3';
+import audioFail from '../data/music/fail.mp3';
 
-import birdsDate from '../data/dateBirds';
-import getRandomNumber from '../utils/getRandomNumber';
+import { getRandomInt, clearColorButton } from '../utils/utils';
 
-
-import KindBirdList from './KindBirdList/index';
+import ListLevel from './ListLevel/index';
 import SectionSecretBird from './SectionSecretBird/index';
 import SectionListBirds from './SectionListBirds/index';
 import SectionDescriptionBird from './SectionDescriptionBird/index';
-import ButtonNext from './ButtonNextLevel/index';
+import ButtonNextLevel from './ButtonNextLevel/index';
 import Score from './Score/index';
-
-console.log(birdsDate);
+import GameOver from './GameOver/index';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       level: 0,
-      numberSecretBird: getRandomNumber(6),
-      numberSelectBird: 0,
-      isCorrectAnswer: false,
+      numberSecretBird: getRandomInt(6),
+      numberSelectBird: false,
       isCorrectAnswerGet: false,
-      clickButtonNextLevel: false,      
-      data: null,
-      active: 0,
-      term: '',
-      scope: 5,
-      currentScope: 0,
-      className: 'button_bird--color',
-    };   
+      score: 5,
+      totalScore: 0,
+      showStore: true,
+    };
+    this.clickButtonNextLevel = this.clickButtonNextLevel.bind(this);
+    this.clickButtonBird = this.clickButtonBird.bind(this);
+    this.restart = this.restart.bind(this);
   }
 
+  clickButtonBird(e, ibBird) {
+    const soundFortune = document.getElementById('audio_fortune');
+    const soundFail = document.getElementById('audio_fail');
+    const { target } = e;
+    const { numberSecretBird, isCorrectAnswerGet, score } = this.state;
+    this.setState({ numberSelectBird: ibBird });
+    if (!isCorrectAnswerGet && ibBird - 1 !== numberSecretBird) {
+      target.firstChild.style.background = 'red';
+      this.setState((prevState) => ({ score: prevState.score - 1 }));
+      soundFail.play();
+    }
 
-  updateData = (config) => {
-    this.setState(config);
-    const { level } = this.state;
-    console.log('level', level);
-  }
-
-  updateCorrectAnswerGet = (isCorrectAnswer) => {
-    if (isCorrectAnswer) {
-      this.setState({ isCorrectAnswerGet: true });
+    if (!isCorrectAnswerGet && ibBird - 1 === numberSecretBird) {
+      target.firstChild.style.background = 'green';
+      this.setState((prevState) => ({
+        totalScore: prevState.totalScore + score,
+        isCorrectAnswerGet: true,
+      }));
+      soundFortune.play();
     }
   }
 
-  consoleLog() {
-    const { numberBird, level } = this.state;
-    console.log('active', numberBird);
-    console.log('level', level);
+  clickButtonNextLevel() {
+    const { isCorrectAnswerGet, level } = this.state;
+    if (isCorrectAnswerGet && level < 5) {
+      this.setState((prevState) => ({
+        level: prevState.level + 1,
+        isCorrectAnswerGet: false,
+        numberSecretBird: getRandomInt(6),
+        numberSelectBird: false,
+        score: 5,
+      }));
+      clearColorButton();
+    } else if (level === 5) {
+      this.setState({ showStore: false });
+    }
   }
 
 
-  render() {    
-    const { isCorrectAnswerGet, currentScope, scope } = this.state;
+  restart() {
+    this.setState((prevState) => ({
+      showStore: !prevState.showStore,
+      level: 0,
+      numberSecretBird: getRandomInt(6),
+      numberSelectBird: false,
+      isCorrectAnswerGet: false,
+      score: 5,
+      totalScore: 0,
+    }));
+    clearColorButton();
+  }
+
+
+  render() {
+    const {
+      isCorrectAnswerGet, totalScore, numberSecretBird, level, numberSelectBird, showStore,
+    } = this.state;
     return (
       <div className="wrapper">
         <header className="header">
           <div className="logo" />
           <h1>Song Bird</h1>
-          <Score score={currentScope} />
+          <Score totalScore={totalScore} />
         </header>
-        <KindBirdList state={this.state} />
-        <main className="main">
-          <SectionSecretBird state={this.state} />
-          <SectionListBirds state={this.state} update={this.updateData} />
-          <SectionDescriptionBird state={this.state} />
-          <ButtonNext state={this.state} update={this.updateData}/>
+        <ListLevel level={level} />
+        <GameOver showStore={showStore} totalScore={totalScore} onClick={this.restart} />
+        <main className="main" style={{ display: showStore ? 'grid' : 'none' }}>
+          <SectionSecretBird
+            level={level}
+            numberSecretBird={numberSecretBird}
+            isCorrectAnswerGet={isCorrectAnswerGet}
+          />
+          <SectionListBirds
+            isCorrectAnswerGet={isCorrectAnswerGet}
+            level={level}
+            handleClick={this.clickButtonBird}
+          />
+          <SectionDescriptionBird
+            level={level}
+            numberSelectBird={numberSelectBird}
+          />
+          <ButtonNextLevel
+            isCorrectAnswerGet={isCorrectAnswerGet}
+            handleClick={this.clickButtonNextLevel}
+          />
         </main>
-        <button type="button" onClick={() => this.consoleLog()} label="dsf" wight="100px" height="100px" />
-        <p>{scope}</p>
+        <audio id="audio_fortune" src={audioFortune}>
+          <track kind="captions" srcLang="en" />
+        </audio>
+        <audio id="audio_fail" src={audioFail}>
+          <track kind="captions" srcLang="en" />
+        </audio>
       </div>
     );
   }
