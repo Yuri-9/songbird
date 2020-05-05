@@ -3,29 +3,12 @@
 import React from 'react';
 import './style.scss';
 
-function ButtonNext(props) {
-  const { state, update } = props;
-  const { level, isCorrectAnswerGet, clickButtonNextLevel } = state;
-  let levelNext = level;
-  if (isCorrectAnswerGet) {
-    levelNext = (level + 1) % 6;
-  }
-  const updateState = () => {
-    if (isCorrectAnswerGet && !clickButtonNextLevel) {
-      update({ level: levelNext, clickButtonNextLevel: true });
-    } else {
-      update({
-        isCorrectAnswer: false,
-        isCorrectAnswerGet: false,
-        clickButtonNextLevel: false,
-      });
-    }
-  };
+function ButtonNextLevel(props) {
+  const { isCorrectAnswerGet, handleClick } = props;
 
   return (
-    <button type="button" className={isCorrectAnswerGet ? 'button_next green' : 'button_next'} onClick={updateState}>Next Level</button>
+    <button type="button" onClick={handleClick} className={isCorrectAnswerGet ? 'button_next green' : 'button_next'}>Next Level</button>
   );
 }
 
-
-export default ButtonNext;
+export default ButtonNextLevel;

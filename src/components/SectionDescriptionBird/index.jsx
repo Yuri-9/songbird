@@ -7,19 +7,29 @@ import ImageBird from '../ImageBird/index';
 import birdsDate from '../../data/dateBirds';
 
 function SectionDescriptionBird(props) {
-  const { state: { level, numberSelectBird } } = props;
-  console.log(level, numberSelectBird);
-  const selectBirdDate = birdsDate[level][numberSelectBird];
-  return (
+  const { level, numberSelectBird } = props;
+  const dateBirdSelect = birdsDate[level][numberSelectBird - 1];
+
+  return numberSelectBird ? (
     <div className="description_bird">
       <div className="description_bird--flex">
-        <ImageBird birdDate={selectBirdDate} />
-        <div className="container_player">
-          <h3>******</h3>
-          <Player birdDate={selectBirdDate} />
-        </div>
+        <ImageBird imageBird={dateBirdSelect.image} />
+        <ul className="container_player">
+          <li>
+            <h3>{dateBirdSelect.name}</h3>
+          </li>
+          <li>
+            <span>{dateBirdSelect.species}</span>
+          </li>
+          <Player birdDate={dateBirdSelect} />
+        </ul>
       </div>
-      <span>{ selectBirdDate.description }</span>
+      <span>{ dateBirdSelect.description }</span>
+    </div>
+  ) : (
+    <div className="description_bird">
+      <span>Послушайте плеер.</span>
+      <span>Угадайте птицу, выбрав одну из списка </span>
     </div>
   );
 }
